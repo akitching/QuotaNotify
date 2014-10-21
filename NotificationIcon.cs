@@ -118,17 +118,50 @@ namespace QuotaNotify
 		{
 			this.Hide();
 			drives = new List<char>();
-			drives.Add('Q');
-			drives.Add('U');
-			percentFreeD = new Dictionary<char,double>();
-			foreach (char drive in drives) {
-				percentFreeD[drive] = 100.0f;
+			string[] driveList = null;
+			string keyLocation = "SOFTWARE\\Amalgam";
+			RegistryKey registry64 = RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, RegistryView.Registry64);
+			RegistryKey registry32 = RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, RegistryView.Registry32);
+			RegistryKey key = null;
+			try {
+				key = registry64.OpenSubKey(keyLocation);
+				if (key == null)
+				{
+					key = registry32.OpenSubKey(keyLocation);
+				}
+
+				if (key != null)
+				{
+					// Read drive list from registry
+					driveList = (string[]) key.GetValue("Drives");
+				}
+				if (driveList == null)
+				{
+					// No drives in registry
+					// Default to home drive H
+					drives.Add('H');
+				}
+				else
+				{
+					foreach (string drive in driveList)
+					{
+						drives.Add(drive.ToCharArray()[0]);
+					}
+				}
+
+				percentFreeD = new Dictionary<char,double>();
+				foreach (char drive in drives) {
+					percentFreeD[drive] = 100.0f;
+				}
+
+				nextCheck = DateTime.Now;
+				timer.Tick += new EventHandler(checkDriveSpace);
+				timer.Interval = 5000;
+				timer.Start();
+				this.Hide();
+			} catch (Exception ex) {
+				MessageBox.Show( "Error " + ex.ToString() );
 			}
-			nextCheck = DateTime.Now;
-			timer.Tick += new EventHandler(checkDriveSpace);
-			timer.Interval = 5000;
-			timer.Start();
-			this.Hide();
 		}
 
 		private void checkDriveSpace(Object sender, EventArgs args)
