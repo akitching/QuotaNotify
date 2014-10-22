@@ -22,6 +22,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Collections.Generic;
 using Microsoft.Win32;
+using System.Xml;
+using System.Text;
 
 namespace QuotaNotify
 {
@@ -58,7 +60,52 @@ namespace QuotaNotify
 	
 		private void loadFromFile()
 		{
-			// TODO: Load config data from file in install directory
+			XmlDocument xml = null;
+			try {
+				xml = new XmlDocument();
+				xml.Load("config.xml");
+			} catch (FileNotFoundException ex) {
+				// File does not exist
+			} catch (Exception ex) {
+				// Other exception
+				// TODO: Log error
+			}
+			if (xml != null)
+			{
+				XmlNode initialIntervalNode = xml.SelectSingleNode("//Config/initialInterval");
+				if (initialIntervalNode != null)
+					initialIntervalValue = Convert.ToInt32(initialIntervalNode.InnerText);
+				XmlNode checkIntervalNode = xml.SelectSingleNode("//Config/checkInterval");
+				if (checkIntervalNode != null)
+					checkIntervalValue = Convert.ToInt32(checkIntervalNode.InnerText);
+				XmlNode warnPercentNode = xml.SelectSingleNode("//Config/warnPercent");
+				if (warnPercentNode != null)
+					warnPercentValue = Convert.ToInt32(warnPercentNode.InnerText);
+				XmlNode warnBelowNode = xml.SelectSingleNode("//Config/warnBelow");
+				if (warnBelowNode != null)
+					warnBelowValue = Convert.ToInt32(warnBelowNode.InnerText);
+				XmlNode warnMessageNode = xml.SelectSingleNode("//Config/warnMessage");
+				if (warnMessageNode != null)
+					warnMessageValue = warnMessageNode.InnerText;
+				XmlNode obsessNode = xml.SelectSingleNode("//Config/obsess");
+				if (obsessNode != null)
+					obsessValue = Convert.ToBoolean(obsessNode.InnerText);
+
+				XmlNodeList driveNodes = xml.SelectNodes("//Config/Drives/Drive");
+				foreach (XmlNode driveNode in driveNodes)
+	            {
+					if (driveNode.Name.ToLower() == "drive")
+					{
+						if (driveNode.Attributes["letter"] != null
+						    && driveNode.Attributes["letter"].Value.Length == 1)
+						{
+							char letter = driveNode.Attributes["letter"].Value.ToCharArray()[0];
+							if (Char.IsLetter(letter))
+								this.driveList.Add(new Drive(letter));
+						}
+					}
+	            }
+			}
 		}
 	
 		private void loadFromRegistry()
