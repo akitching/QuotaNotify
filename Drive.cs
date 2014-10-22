@@ -27,13 +27,22 @@ namespace QuotaNotify
 {
 	class Drive : IEquatable<Drive>
 	{
-		private char letterValue;
-		private double percentFreeValue;
-		
+		private char letter;
+		private double percentFree;
+
+		public char Letter {
+			get { return letter; }
+			private set { letter = value; }
+		}
+		public double PercentFree {
+			get { return percentFree; }
+			set { percentFree = value; }
+		}
+
 		public Drive(char letter)
 		{
-			letterValue = letter;
-			percentFreeValue = 100.0f;
+			Letter = letter;
+			PercentFree = 100.0f;
 		}
 		
 		#region Equals and GetHashCode implementation
@@ -42,21 +51,21 @@ namespace QuotaNotify
 			Drive other = obj as Drive;
 			if (other == null)
 				return false;
-			return this.letterValue == other.letterValue;
+			return this.Letter == other.Letter;
 		}
 	
 		public bool Equals(Drive other)
 		{
 			if (other == null)
 				return false;
-			return (this.letterValue.Equals(other.letterValue));
+			return (this.Letter.Equals(other.Letter));
 		}
 		
 		public override int GetHashCode()
 		{
 			int hashCode = 0;
 			unchecked {
-				hashCode += 1000000007 * letterValue.GetHashCode();
+				hashCode += 1000000007 * Letter.GetHashCode();
 			}
 			return hashCode;
 		}
@@ -75,20 +84,5 @@ namespace QuotaNotify
 			return !(lhs == rhs);
 		}
 		#endregion
-	
-		public char letter()
-		{
-			return letterValue;
-		}
-	
-		public double percentFree()
-		{
-			return percentFreeValue;
-		}
-	
-		public void percentFree(double percentFreeValue)
-		{
-			this.percentFreeValue = percentFreeValue;
-		}
 	}
 }

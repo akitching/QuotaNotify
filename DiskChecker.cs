@@ -62,15 +62,15 @@ namespace QuotaNotify
 				{
 					double percentFree = ((double)drive.TotalFreeSpace / drive.TotalSize) * 100;
 					char driveLetter = drive.Name.ToCharArray()[0];
-					if ( config.Drives.Exists(x => x.letter() == driveLetter) )
+					if ( config.Drives.Exists(x => x.Letter == driveLetter) )
 					{
-						Drive drv = config.Drives.Find(x => x.letter() == driveLetter);
-						if ((percentFree < config.WarnPercent) && ((percentFree < drv.percentFree() || config.Obsess == true)) && (drive.TotalFreeSpace < config.WarnBelow))
+						Drive drv = config.Drives.Find(x => x.Letter == driveLetter);
+						if ((percentFree < config.WarnPercent) && ((percentFree < drv.PercentFree || config.Obsess == true)) && (drive.TotalFreeSpace < config.WarnBelow))
 						{
 							warning = true;
 							message += "Drive " + drive.Name + " has only " + String.Format("{0:F2}", percentFree) + "% free space.\n";
 						}
-						drv.percentFree(percentFree);
+						drv.PercentFree = percentFree;
 					}
 				}
 			}
