@@ -20,6 +20,8 @@ using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 using System.IO;
+using System.Collections.Generic;
+using Microsoft.Win32;
 
 namespace QuotaNotify
 {
@@ -99,75 +101,5 @@ namespace QuotaNotify
 			MessageBox.Show(aboutMessage, "About Quota Notify");
 		}
 		#endregion
-	}
-	
-	public class DiskChecker : Form
-	{
-		static System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-		
-		private double percentFreeQ;
-		private double percentFreeU;
-		private bool warning;
-		private string message;
-		
-		private DateTime nextCheck;
-		
-		public DiskChecker()
-		{
-			this.Hide();
-			percentFreeQ = 100.0f;
-			percentFreeU = 100.0f;
-			
-			nextCheck = DateTime.Now;
-			timer.Tick += new EventHandler(checkDriveSpace);
-			timer.Interval = 5000;
-			timer.Start();
-			this.Hide();
-		}
-
-		private void checkDriveSpace(Object sender, EventArgs args)
-		{
-			if (timer.Interval < 300000)
-			{
-				timer.Interval = 300000;
-			}
-			warning = false;
-			message = "";
-			foreach (DriveInfo drive in DriveInfo.GetDrives())
-			{
-				if (drive.IsReady)
-				{
-					double percentFree = ((double)drive.TotalFreeSpace / drive.TotalSize) * 100;
-					switch (drive.Name) {
-						case "Q:\\":
-							if ((percentFree < 10) && (percentFree < percentFreeQ) && (drive.TotalFreeSpace < (100 * 1024 * 1024)))
-							{
-								warning = true;
-								message += "Drive " + drive.Name + " has only " + String.Format("{0:F2}", percentFree) + "% free space.\n";
-							}
-							percentFreeQ = percentFree;
-							break;
-						case "U:\\":
-							if ((percentFree < 10) && (percentFree < percentFreeU) && (drive.TotalFreeSpace < (100 * 1024 * 1024)))
-							{
-								warning = true;
-								message += "Drive " + drive.Name + " has only " + String.Format("{0:F2}", percentFree) + "% free space.\n";
-							}
-							percentFreeU = percentFree;
-							break;
-						default:
-							
-							break;
-					}
-				}
-			}
-			if (warning)
-			{
-				message += "Please delete unnecessary files.\n";
-				MessageBox.Show (message, "Low disk space");
-				warning = false;
-				message = "";
-			}
-		}
 	}
 }
