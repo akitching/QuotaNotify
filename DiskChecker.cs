@@ -42,16 +42,16 @@ namespace QuotaNotify
 	
 			nextCheck = DateTime.Now;
 			timer.Tick += new EventHandler(checkDriveSpace);
-			timer.Interval = config.initialInterval();
+			timer.Interval = config.InitialInterval;
 			timer.Start();
 			this.Hide();
 		}
 	
 		private void checkDriveSpace(Object sender, EventArgs args)
 		{
-			if (timer.Interval < config.checkInterval())
+			if (timer.Interval < config.CheckInterval)
 			{
-				timer.Interval = config.checkInterval();
+				timer.Interval = config.CheckInterval;
 			}
 			warning = false;
 			message = "";
@@ -62,10 +62,10 @@ namespace QuotaNotify
 				{
 					double percentFree = ((double)drive.TotalFreeSpace / drive.TotalSize) * 100;
 					char driveLetter = drive.Name.ToCharArray()[0];
-					if ( config.drives().Exists(x => x.letter() == driveLetter) )
+					if ( config.Drives.Exists(x => x.letter() == driveLetter) )
 					{
-						Drive drv = config.drives().Find(x => x.letter() == driveLetter);
-						if ((percentFree < config.warnPercent()) && ((percentFree < drv.percentFree() || config.obsess() == true)) && (drive.TotalFreeSpace < config.warnBelow()))
+						Drive drv = config.Drives.Find(x => x.letter() == driveLetter);
+						if ((percentFree < config.WarnPercent) && ((percentFree < drv.percentFree() || config.Obsess == true)) && (drive.TotalFreeSpace < config.WarnBelow))
 						{
 							warning = true;
 							message += "Drive " + drive.Name + " has only " + String.Format("{0:F2}", percentFree) + "% free space.\n";
@@ -77,8 +77,8 @@ namespace QuotaNotify
 			if (warning)
 			{
 				message += "Please delete unnecessary files.\n";
-				if (config.warnMessage() != null)
-					message += config.warnMessage();
+				if (config.WarnMessage != null)
+					message += config.WarnMessage;
 				MessageBox.Show (message, "Low disk space");
 				warning = false;
 				message = "";

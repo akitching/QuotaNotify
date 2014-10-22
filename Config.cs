@@ -29,32 +29,61 @@ namespace QuotaNotify
 {
 	class Config
 	{
-		private List<Drive> driveList;
-		private int initialIntervalValue;
-		private int checkIntervalValue;
-		private int warnPercentValue;
-		private int warnBelowValue;
-		private string warnMessageValue;
-		private bool obsessValue;
-	
+		private List<Drive> drives;
+		private int initialInterval;
+		private int checkInterval;
+		private int warnPercent;
+		private int warnBelow;
+		private string warnMessage;
+		private bool obsess;
+
+		public List<Drive> Drives {
+			get { return drives; }
+			private set { drives = value; }
+		}
+		public int InitialInterval {
+			get { return initialInterval; }
+			set { initialInterval = value; }
+		}
+		public int CheckInterval {
+			get { return checkInterval; }
+			private set { checkInterval = value; }
+		}
+		public int WarnPercent {
+			get { return warnPercent; }
+			private set { warnPercent = value; }
+		}
+		public int WarnBelow {
+			get { return warnBelow; }
+			private set { warnBelow = value; }
+		}
+		public string WarnMessage {
+			get { return warnMessage; }
+			private set { warnMessage = value; }
+		}
+		public bool Obsess {
+			get { return obsess; }
+			private set { obsess = value; }
+		}
+
 		public Config()
 		{
-			driveList = new List<Drive>();
+			Drives = new List<Drive>();
 			// Set default values
-			initialIntervalValue = 5000;
-			checkIntervalValue = 300000;
-			warnPercentValue = 10;
-			warnBelowValue = 100 * 1024 * 1024;
-			warnMessageValue = null;
-			obsessValue = false;
+			InitialInterval = 5000;
+			CheckInterval = 300000;
+			WarnPercent = 10;
+			WarnBelow = 100 * 1024 * 1024;
+			WarnMessage = null;
+			Obsess = false;
 			// Override defaults with cutomized settings
 			this.loadFromFile();
 			this.loadFromRegistry();
-			if (driveList.Count == 0)
+			if (Drives.Count == 0)
 			{
 				// No drives configured
 				// Default to home drive H
-				driveList.Add(new Drive('H'));
+				Drives.Add(new Drive('H'));
 			}
 		}
 	
@@ -74,24 +103,24 @@ namespace QuotaNotify
 			{
 				XmlNode initialIntervalNode = xml.SelectSingleNode("//Config/initialInterval");
 				if (initialIntervalNode != null)
-					initialIntervalValue = Convert.ToInt32(initialIntervalNode.InnerText);
+					InitialInterval = Convert.ToInt32(initialIntervalNode.InnerText);
 				XmlNode checkIntervalNode = xml.SelectSingleNode("//Config/checkInterval");
 				if (checkIntervalNode != null)
-					checkIntervalValue = Convert.ToInt32(checkIntervalNode.InnerText);
+					CheckInterval = Convert.ToInt32(checkIntervalNode.InnerText);
 				XmlNode warnPercentNode = xml.SelectSingleNode("//Config/warnPercent");
 				if (warnPercentNode != null)
-					warnPercentValue = Convert.ToInt32(warnPercentNode.InnerText);
+					WarnPercent = Convert.ToInt32(warnPercentNode.InnerText);
 				XmlNode warnBelowNode = xml.SelectSingleNode("//Config/warnBelow");
 				if (warnBelowNode != null)
-					warnBelowValue = Convert.ToInt32(warnBelowNode.InnerText);
+					WarnBelow = Convert.ToInt32(warnBelowNode.InnerText);
 				XmlNode warnMessageNode = xml.SelectSingleNode("//Config/warnMessage");
 				if (warnMessageNode != null)
-					warnMessageValue = warnMessageNode.InnerText;
+					WarnMessage = warnMessageNode.InnerText;
 				XmlNode obsessNode = xml.SelectSingleNode("//Config/obsess");
 				if (obsessNode != null)
-					obsessValue = Convert.ToBoolean(obsessNode.InnerText);
+					Obsess = Convert.ToBoolean(obsessNode.InnerText);
 
-				XmlNodeList driveNodes = xml.SelectNodes("//Config/Drives/Drive");
+				XmlNodeList driveNodes = xml.SelectNodes("//Config/driveList/Drive");
 				foreach (XmlNode driveNode in driveNodes)
 	            {
 					if (driveNode.Name.ToLower() == "drive")
@@ -101,7 +130,7 @@ namespace QuotaNotify
 						{
 							char letter = driveNode.Attributes["letter"].Value.ToCharArray()[0];
 							if (Char.IsLetter(letter))
-								this.driveList.Add(new Drive(letter));
+								Drives.Add(new Drive(letter));
 						}
 					}
 	            }
@@ -124,22 +153,22 @@ namespace QuotaNotify
 	
 				if (key != null)
 				{
-					initialIntervalValue = readRegistryKey(initialIntervalValue, "initialInterval", key);
-					checkIntervalValue = readRegistryKey(checkIntervalValue, "checkInterval", key);
-					warnPercentValue = readRegistryKey(warnPercentValue, "warnPercent", key);
-					warnBelowValue = readRegistryKey(warnBelowValue, "warnBelow", key);
-					warnMessageValue = readRegistryKey(warnMessageValue, "warnMessage", key);
-					obsessValue = readRegistryKey(obsessValue, "obsess", key);
+					InitialInterval = readRegistryKey(InitialInterval, "initialInterval", key);
+					CheckInterval = readRegistryKey(CheckInterval, "checkInterval", key);
+					WarnPercent = readRegistryKey(WarnPercent, "warnPercent", key);
+					WarnBelow = readRegistryKey(WarnBelow, "warnBelow", key);
+					WarnMessage = readRegistryKey(WarnMessage, "warnMessage", key);
+					Obsess = readRegistryKey(Obsess, "obsess", key);
 	
 					driveList = readRegistryKey(driveList, "Drives", key);
-					if (driveList.Length > 0)
+					if (driveList != null && driveList.Length > 0)
 					{
 						// Drives assigned in registry should override config file.
-						// Thus, this.driveList must be emptied before adding drives definded in the registry. 
-						this.driveList.Clear();
+						// Thus, this.drives must be emptied before adding drives definded in the registry. 
+						Drives.Clear();
 						foreach (string drive in driveList)
 						{
-							this.driveList.Add(new Drive(drive.ToCharArray()[0]));
+							Drives.Add(new Drive(drive.ToCharArray()[0]));
 						}
 					}
 				}
@@ -205,41 +234,6 @@ namespace QuotaNotify
 			{
 				return (string[]) val;
 			}
-		}
-	
-		public List<Drive> drives()
-		{
-			return driveList;
-		}
-	
-		public int initialInterval()
-		{
-			return initialIntervalValue;
-		}
-	
-		public int checkInterval()
-		{
-			return checkIntervalValue;
-		}
-	
-		public int warnPercent()
-		{
-			return warnPercentValue;
-		}
-	
-		public int warnBelow()
-		{
-			return warnBelowValue;
-		}
-	
-		public string warnMessage()
-		{
-			return warnMessageValue;
-		}
-	
-		public bool obsess()
-		{
-			return obsessValue;
 		}
 	}
 }
