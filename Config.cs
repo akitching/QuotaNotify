@@ -136,9 +136,6 @@ namespace QuotaNotify
 					{
 						this.driveList.Add(new Drive(drive.ToCharArray()[0]));
 					}
-					foreach (Drive drive in this.driveList) {
-						drive.percentFree(100.0f);
-					}
 				}
 			} catch (Exception ex) {
 				MessageBox.Show( "Error " + ex.ToString() );
