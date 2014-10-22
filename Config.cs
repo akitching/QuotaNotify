@@ -132,9 +132,15 @@ namespace QuotaNotify
 					obsessValue = readRegistryKey(obsessValue, "obsess", key);
 	
 					driveList = readRegistryKey(driveList, "Drives", key);
-					foreach (string drive in driveList)
+					if (driveList.Length > 0)
 					{
-						this.driveList.Add(new Drive(drive.ToCharArray()[0]));
+						// Drives assigned in registry should override config file.
+						// Thus, this.driveList must be emptied before adding drives definded in the registry. 
+						this.driveList.Clear();
+						foreach (string drive in driveList)
+						{
+							this.driveList.Add(new Drive(drive.ToCharArray()[0]));
+						}
 					}
 				}
 			} catch (Exception ex) {
