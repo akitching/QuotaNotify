@@ -7,7 +7,7 @@ Created to try to stop my users filling their home directories, which causes mer
 
 Configuration
 -------------
-QuotaNotify can be pull its configuration from `config.xml` in the install directory and/or the Windows registry. Settings defined in the registry will override settings defined in `config.xml`. If no settings are defined in either the registry of `config.xml`, QuotaNotify will use its default values.
+QuotaNotify can pull its configuration from `config.xml` in the install directory and/or the Windows registry. Settings defined in the registry will override settings defined in `config.xml`. If no settings are defined in either the registry of `config.xml`, QuotaNotify will use its default values.
 
 ### Settings
 #### Initial Interval
