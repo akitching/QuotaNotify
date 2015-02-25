@@ -7,7 +7,7 @@ Created to try to stop my users filling their home directories, which causes mer
 
 Configuration
 -------------
-QuotaNotify can pull its configuration from `config.xml` in the install directory and/or the Windows registry. Settings defined in the registry will override settings defined in `config.xml`. If no settings are defined in either the registry of `config.xml`, QuotaNotify will use its default values.
+QuotaNotify can pull its configuration from `config.xml` in the install directory and/or the Windows registry. Settings defined in the User's registry hive override the local machine's registry hive, which overrides settings defined in `config.xml`. If no settings are defined in either the registry of `config.xml`, QuotaNotify will use its default values.
 
 ### Settings
 #### Initial Interval
@@ -58,14 +58,34 @@ List of drive letters to monitor.
 ```
 
 ### Registry
-#### Registry keys for QuotaNotify:
+#### Per machine registry keys:
 
 | Setting          | Registry Key                                            | Type         | Notes                       |
 | ---------------- | ------------------------------------------------------- | ------------ | --------------------------- |
-| Initial Interval | ``HKLM\SOFTWARE\Amalgam\InitialInterval`` | REG_DWORD    |                             |
-| Check Interval   | ``HKLM\SOFTWARE\Amalgam\CheckInterval``   | REG_DWORD    |                             |
-| Warn Percent     | ``HKLM\SOFTWARE\Amalgam\WarnPercent``     | REG_DWORD    |                             |
-| Warn Below       | ``HKLM\SOFTWARE\Amalgam\WarnBelow``       | REG_DWORD    |                             |
-| Warn Message     | ``HKLM\SOFTWARE\Amalgam\WarnMessage``     | REG_SZ       |                             |
-| Obsess           | ``HKLM\SOFTWARE\Amalgam\Obsess``          | REG_DWORD    |                             |
-| Drives           | ``HKLM\SOFTWARE\Amalgam\Drives``          | REG_MULTI_SZ | One drive letter per string |
+| Initial Interval | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\InitialInterval`` | REG_DWORD    |                             |
+| Check Interval   | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\CheckInterval``   | REG_DWORD    |                             |
+| Warn Percent     | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\WarnPercent``     | REG_DWORD    |                             |
+| Warn Below       | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\WarnBelow``       | REG_DWORD    |                             |
+| Warn Message     | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\WarnMessage``     | REG_SZ       |                             |
+| Obsess           | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\Obsess``          | REG_DWORD    |                             |
+| Drives           | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\Drives``          | REG_MULTI_SZ | One drive letter per string |
+
+#### Per user registry keys:
+| Setting          | Registry Key                                            | Type         | Notes                       |
+| ---------------- | ------------------------------------------------------- | ------------ | --------------------------- |
+| Initial Interval | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\InitialInterval`` | REG_DWORD    |                             |
+| Check Interval   | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\CheckInterval``   | REG_DWORD    |                             |
+| Warn Percent     | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\WarnPercent``     | REG_DWORD    |                             |
+| Warn Below       | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\WarnBelow``       | REG_DWORD    |                             |
+| Warn Message     | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\WarnMessage``     | REG_SZ       |                             |
+| Obsess           | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\Obsess``          | REG_DWORD    |                             |
+| Drives           | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\Drives``          | REG_MULTI_SZ | One drive letter per string |
+
+Change Log
+----------
+### 1.2.0
+* Add support for per user settings
+* Fix bug which causes application to crash if required registry keys are not present
+* Change registry key path:
+  * Change `Amalgam` to `AmalgamStudios`
+  * Add `QuotaNotify` to path

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2014 Alex Kitching <alex@kitching.info>
+ * Copyright (C) 2014-2015 Alex Kitching <alex@kitching.info>
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,7 +78,8 @@ namespace QuotaNotify
 			Obsess = false;
 			// Override defaults with cutomized settings
 			this.loadFromFile();
-			this.loadFromRegistry();
+			this.loadFromRegistry(Microsoft.Win32.RegistryHive.LocalMachine);
+			this.loadFromRegistry(Microsoft.Win32.RegistryHive.CurrentUser);
 			if (Drives.Count == 0)
 			{
 				// No drives configured
@@ -137,12 +138,12 @@ namespace QuotaNotify
 			}
 		}
 	
-		private void loadFromRegistry()
+		private void loadFromRegistry(Microsoft.Win32.RegistryHive hive)
 		{
 			string[] driveList = null;
-			string keyLocation = "SOFTWARE\\Amalgam";
-			RegistryKey registry64 = RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, RegistryView.Registry64);
-			RegistryKey registry32 = RegistryKey.OpenBaseKey(Microsoft.Win32.RegistryHive.LocalMachine, RegistryView.Registry32);
+			string keyLocation = "SOFTWARE\\AmalgamStudios\\QuotaNotify";
+			RegistryKey registry64 = RegistryKey.OpenBaseKey(hive, RegistryView.Registry64);
+			RegistryKey registry32 = RegistryKey.OpenBaseKey(hive, RegistryView.Registry32);
 			RegistryKey key = null;
 			try {
 				key = registry64.OpenSubKey(keyLocation);
@@ -177,7 +178,9 @@ namespace QuotaNotify
 			} finally {
 				registry32.Close();
 				registry64.Close();
-				key.Close();
+				if (key != null) {
+					key.Close();
+				}
 			}
 		}
 	
