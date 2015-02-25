@@ -141,7 +141,7 @@ namespace QuotaNotify
 		private void loadFromRegistry(Microsoft.Win32.RegistryHive hive)
 		{
 			string[] driveList = null;
-			string keyLocation = "SOFTWARE\\Amalgam";
+			string keyLocation = "SOFTWARE\\AmalgamStudios\\QuotaNotify";
 			RegistryKey registry64 = RegistryKey.OpenBaseKey(hive, RegistryView.Registry64);
 			RegistryKey registry32 = RegistryKey.OpenBaseKey(hive, RegistryView.Registry32);
 			RegistryKey key = null;

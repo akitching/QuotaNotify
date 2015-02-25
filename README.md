@@ -62,21 +62,21 @@ List of drive letters to monitor.
 
 | Setting          | Registry Key                                            | Type         | Notes                       |
 | ---------------- | ------------------------------------------------------- | ------------ | --------------------------- |
-| Initial Interval | ``HKLM\SOFTWARE\Amalgam\InitialInterval`` | REG_DWORD    |                             |
-| Check Interval   | ``HKLM\SOFTWARE\Amalgam\CheckInterval``   | REG_DWORD    |                             |
-| Warn Percent     | ``HKLM\SOFTWARE\Amalgam\WarnPercent``     | REG_DWORD    |                             |
-| Warn Below       | ``HKLM\SOFTWARE\Amalgam\WarnBelow``       | REG_DWORD    |                             |
-| Warn Message     | ``HKLM\SOFTWARE\Amalgam\WarnMessage``     | REG_SZ       |                             |
-| Obsess           | ``HKLM\SOFTWARE\Amalgam\Obsess``          | REG_DWORD    |                             |
-| Drives           | ``HKLM\SOFTWARE\Amalgam\Drives``          | REG_MULTI_SZ | One drive letter per string |
+| Initial Interval | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\InitialInterval`` | REG_DWORD    |                             |
+| Check Interval   | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\CheckInterval``   | REG_DWORD    |                             |
+| Warn Percent     | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\WarnPercent``     | REG_DWORD    |                             |
+| Warn Below       | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\WarnBelow``       | REG_DWORD    |                             |
+| Warn Message     | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\WarnMessage``     | REG_SZ       |                             |
+| Obsess           | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\Obsess``          | REG_DWORD    |                             |
+| Drives           | ``HKLM\SOFTWARE\AmalgamStudios\QuotaNotify\Drives``          | REG_MULTI_SZ | One drive letter per string |
 
 #### Per user registry keys:
 | Setting          | Registry Key                                            | Type         | Notes                       |
 | ---------------- | ------------------------------------------------------- | ------------ | --------------------------- |
-| Initial Interval | ``HKCU\SOFTWARE\Amalgam\InitialInterval`` | REG_DWORD    |                             |
-| Check Interval   | ``HKCU\SOFTWARE\Amalgam\CheckInterval``   | REG_DWORD    |                             |
-| Warn Percent     | ``HKCU\SOFTWARE\Amalgam\WarnPercent``     | REG_DWORD    |                             |
-| Warn Below       | ``HKCU\SOFTWARE\Amalgam\WarnBelow``       | REG_DWORD    |                             |
-| Warn Message     | ``HKCU\SOFTWARE\Amalgam\WarnMessage``     | REG_SZ       |                             |
-| Obsess           | ``HKCU\SOFTWARE\Amalgam\Obsess``          | REG_DWORD    |                             |
-| Drives           | ``HKCU\SOFTWARE\Amalgam\Drives``          | REG_MULTI_SZ | One drive letter per string |
+| Initial Interval | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\InitialInterval`` | REG_DWORD    |                             |
+| Check Interval   | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\CheckInterval``   | REG_DWORD    |                             |
+| Warn Percent     | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\WarnPercent``     | REG_DWORD    |                             |
+| Warn Below       | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\WarnBelow``       | REG_DWORD    |                             |
+| Warn Message     | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\WarnMessage``     | REG_SZ       |                             |
+| Obsess           | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\Obsess``          | REG_DWORD    |                             |
+| Drives           | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\Drives``          | REG_MULTI_SZ | One drive letter per string |
