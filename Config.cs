@@ -178,7 +178,9 @@ namespace QuotaNotify
 			} finally {
 				registry32.Close();
 				registry64.Close();
-				key.Close();
+				if (key != null) {
+					key.Close();
+				}
 			}
 		}
 	
