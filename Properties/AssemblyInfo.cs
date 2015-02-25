@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Alex Kitching")]
 [assembly: AssemblyProduct("QuotaNotify")]
-[assembly: AssemblyCopyright("Copyright 2014")]
+[assembly: AssemblyCopyright("Copyright 2014-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -25,4 +25,4 @@ using System.Runtime.InteropServices;
 // The assembly version has following format :
 //
 // Major.Minor.Build.Revision
-[assembly: AssemblyVersion("1.1.1")]
+[assembly: AssemblyVersion("1.2.0")]

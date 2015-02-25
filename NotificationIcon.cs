@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (C) 2014 Alex Kitching <alex@kitching.info>
+ * Copyright (C) 2014-2015 Alex Kitching <alex@kitching.info>
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ namespace QuotaNotify
 		private void menuAboutClick(object sender, EventArgs e)
 		{
 			string aboutMessage;
-			aboutMessage = "Quota Notify 1.1.0. Copyright \u00a9 2014 Alex Kitching.\n";
+			aboutMessage = "Quota Notify 1.2.0. Copyright \u00a9 2014-2015 Alex Kitching.\n";
 			aboutMessage += "\n";
 			aboutMessage += "This program comes with ABSOLUTELY NO WARRANTY.\n";
     		aboutMessage += "This is free software, and you are welcome to redistribute it under the terms of the GNU GPL v3.\n";
