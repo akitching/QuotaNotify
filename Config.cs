@@ -79,6 +79,7 @@ namespace QuotaNotify
 			// Override defaults with cutomized settings
 			this.loadFromFile();
 			this.loadFromRegistry(Microsoft.Win32.RegistryHive.LocalMachine);
+			this.loadFromRegistry(Microsoft.Win32.RegistryHive.CurrentUser);
 			if (Drives.Count == 0)
 			{
 				// No drives configured
