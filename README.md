@@ -7,7 +7,7 @@ Created to try to stop my users filling their home directories, which causes mer
 
 Configuration
 -------------
-QuotaNotify can pull its configuration from `config.xml` in the install directory and/or the Windows registry. Settings defined in the registry will override settings defined in `config.xml`. If no settings are defined in either the registry of `config.xml`, QuotaNotify will use its default values.
+QuotaNotify can pull its configuration from `config.xml` in the install directory and/or the Windows registry. Settings defined in the User's registry hive override the local machine's registry hive, which overrides settings defined in `config.xml`. If no settings are defined in either the registry of `config.xml`, QuotaNotify will use its default values.
 
 ### Settings
 #### Initial Interval
@@ -58,7 +58,7 @@ List of drive letters to monitor.
 ```
 
 ### Registry
-#### Registry keys for QuotaNotify:
+#### Per machine registry keys:
 
 | Setting          | Registry Key                                            | Type         | Notes                       |
 | ---------------- | ------------------------------------------------------- | ------------ | --------------------------- |
@@ -69,3 +69,14 @@ List of drive letters to monitor.
 | Warn Message     | ``HKLM\SOFTWARE\Amalgam\WarnMessage``     | REG_SZ       |                             |
 | Obsess           | ``HKLM\SOFTWARE\Amalgam\Obsess``          | REG_DWORD    |                             |
 | Drives           | ``HKLM\SOFTWARE\Amalgam\Drives``          | REG_MULTI_SZ | One drive letter per string |
+
+#### Per user registry keys:
+| Setting          | Registry Key                                            | Type         | Notes                       |
+| ---------------- | ------------------------------------------------------- | ------------ | --------------------------- |
+| Initial Interval | ``HKCU\SOFTWARE\Amalgam\InitialInterval`` | REG_DWORD    |                             |
+| Check Interval   | ``HKCU\SOFTWARE\Amalgam\CheckInterval``   | REG_DWORD    |                             |
+| Warn Percent     | ``HKCU\SOFTWARE\Amalgam\WarnPercent``     | REG_DWORD    |                             |
+| Warn Below       | ``HKCU\SOFTWARE\Amalgam\WarnBelow``       | REG_DWORD    |                             |
+| Warn Message     | ``HKCU\SOFTWARE\Amalgam\WarnMessage``     | REG_SZ       |                             |
+| Obsess           | ``HKCU\SOFTWARE\Amalgam\Obsess``          | REG_DWORD    |                             |
+| Drives           | ``HKCU\SOFTWARE\Amalgam\Drives``          | REG_MULTI_SZ | One drive letter per string |
