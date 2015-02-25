@@ -216,7 +216,7 @@ namespace QuotaNotify
 		private string readRegistryKey(string variable, string name, RegistryKey key)
 		{
 			object val = key.GetValue(name);
-			if (val == null)
+			if (String.IsNullOrWhiteSpace((string) val))
 			{
 				return variable;
 			}
