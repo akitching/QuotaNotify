@@ -80,3 +80,12 @@ List of drive letters to monitor.
 | Warn Message     | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\WarnMessage``     | REG_SZ       |                             |
 | Obsess           | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\Obsess``          | REG_DWORD    |                             |
 | Drives           | ``HKCU\SOFTWARE\AmalgamStudios\QuotaNotify\Drives``          | REG_MULTI_SZ | One drive letter per string |
+
+Change Log
+----------
+### 1.2.0
+* Add support for per user settings
+* Fix bug which causes application to crash if required registry keys are not present
+* Change registry key path:
+  * Change `Amalgam` to `AmalgamStudios`
+  * Add `QuotaNotify` to path
