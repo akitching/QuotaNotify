@@ -235,8 +235,15 @@ namespace QuotaNotify
 			}
 			else
 			{
-				return (string[]) val;
+				// MULTI_SZ registry values _should_ never contain empty strings, however it is possible
+				// when using Group Policy Preferences, so we strip them out to be safe
+				return Array.FindAll((string[]) val, isNotEmpty);
 			}
+		}
+
+		private bool isNotEmpty(string s)
+		{
+			return !String.IsNullOrWhiteSpace(s);
 		}
 	}
 }
