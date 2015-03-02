@@ -83,6 +83,9 @@ List of drive letters to monitor.
 
 Change Log
 ----------
+### 1.2.1
+* Fix bug which causes application to error when the Drives registry key contains an empty string
+
 ### 1.2.0
 * Add support for per user settings
 * Fix bug which causes application to crash if required registry keys are not present

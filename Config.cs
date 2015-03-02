@@ -216,7 +216,7 @@ namespace QuotaNotify
 		private string readRegistryKey(string variable, string name, RegistryKey key)
 		{
 			object val = key.GetValue(name);
-			if (val == null)
+			if (String.IsNullOrWhiteSpace((string) val))
 			{
 				return variable;
 			}
@@ -235,8 +235,15 @@ namespace QuotaNotify
 			}
 			else
 			{
-				return (string[]) val;
+				// MULTI_SZ registry values _should_ never contain empty strings, however it is possible
+				// when using Group Policy Preferences, so we strip them out to be safe
+				return Array.FindAll((string[]) val, isNotEmpty);
 			}
+		}
+
+		private bool isNotEmpty(string s)
+		{
+			return !String.IsNullOrWhiteSpace(s);
 		}
 	}
 }
