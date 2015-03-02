@@ -25,4 +25,4 @@ using System.Runtime.InteropServices;
 // The assembly version has following format :
 //
 // Major.Minor.Build.Revision
-[assembly: AssemblyVersion("1.2.0")]
+[assembly: AssemblyVersion("1.2.1")]
